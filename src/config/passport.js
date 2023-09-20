@@ -1,25 +1,26 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("../models/user");
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import User from '../models/user.js';
 
-passport.use('local',
+passport.use(
+  'local',
   new LocalStrategy(
     {
-      usernameField: "email",
-      passwordField: "password",
+      usernameField: 'email',
+      passwordField: 'password',
     },
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
         if (!user) {
-          return done(null, false, { message: "No se ha encontrado el usuario" });
+          return done(null, false, { message: 'No se ha encontrado el usuario' });
         } else {
           // Comparar contraseña
           const match = await user.matchPassword(password);
           if (match) {
             return done(null, user);
           } else {
-            return done(null, false, { message: "Contraseña incorrecta" });
+            return done(null, false, { message: 'Contraseña incorrecta' });
           }
         }
       } catch (err) {
@@ -30,7 +31,7 @@ passport.use('local',
 );
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -42,3 +43,4 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+export default passport;

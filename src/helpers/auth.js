@@ -1,6 +1,6 @@
-const helpers = {};
 
-helpers.isAuthenticated = (req, res, next) => {
+
+export const isAuthenticated = (req, res, next) => {
   try {
     if (req.isAuthenticated()) {
       return next();
@@ -13,4 +13,4 @@ helpers.isAuthenticated = (req, res, next) => {
   }
 };
 
-module.exports = helpers;
+

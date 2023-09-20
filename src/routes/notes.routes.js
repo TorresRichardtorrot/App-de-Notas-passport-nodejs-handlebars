@@ -1,17 +1,17 @@
-const { Router } = require("express");
-
+import { Router } from "express";
 const router = Router();
 
-const {
+import {
   renderNoteForm,
   createNewNote,
   renderNotes,
   renderEditForm,
   updateNote,
   deleteNote,
-} = require("../controllers/notes.controller");
+} from "../controllers/notes.controller.js";
 
-const { isAuthenticated } =require('../helpers/auth')
+import { isAuthenticated } from '../helpers/auth.js';
+
 
 //? Crear nueva nota
 router.get("/notes/add",isAuthenticated, renderNoteForm);
@@ -29,4 +29,4 @@ router.put("/notes/edit/:id",isAuthenticated, updateNote);
 //?eliminar nota
 router.delete("/notes/delete/:id",isAuthenticated, deleteNote);
 
-module.exports = router;
+export default router;

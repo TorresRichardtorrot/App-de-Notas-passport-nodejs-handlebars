@@ -1,14 +1,13 @@
-const notesCtrl = {};
 
-const Note = require("../models/note");
+import Note from "../models/note.js";
 
 //form para crear una nota
-notesCtrl.renderNoteForm = (req, res) => {
+export const renderNoteForm = (req, res) => {
   res.render("notes/new-note");
 };
 
 //crear nota
-notesCtrl.createNewNote = async (req, res) => {
+export const createNewNote = async (req, res) => {
   try {
     const { title, description } = req.body;
     if ((title, description)) {
@@ -30,7 +29,7 @@ notesCtrl.createNewNote = async (req, res) => {
 };
 
 //mostrar notas
-notesCtrl.renderNotes = async (req, res) => {
+export const renderNotes = async (req, res) => {
   const notes = await Note.find({ user: req.user._id })
     .sort({ createdAt: "desc" })
     .lean();
@@ -38,7 +37,7 @@ notesCtrl.renderNotes = async (req, res) => {
 };
 
 //editar nota
-notesCtrl.renderEditForm = async (req, res) => {
+export const renderEditForm = async (req, res) => {
   const { id } = req.params;
   try {
     const note = await Note.findById(id).lean();
@@ -54,7 +53,7 @@ notesCtrl.renderEditForm = async (req, res) => {
 };
 
 //actualizar nota
-notesCtrl.updateNote = async (req, res) => {
+export const updateNote = async (req, res) => {
   try {
     const { title, description } = req.body;
     await Note.findByIdAndUpdate(req.params.id, { title, description });
@@ -67,7 +66,7 @@ notesCtrl.updateNote = async (req, res) => {
 };
 
 //eliminar nota
-notesCtrl.deleteNote = async (req, res) => {
+export const deleteNote = async (req, res) => {
   const id = req.params.id;
   try {
     await Note.findByIdAndDelete(id);
@@ -79,4 +78,4 @@ notesCtrl.deleteNote = async (req, res) => {
   }
 };
 
-module.exports = notesCtrl;
+

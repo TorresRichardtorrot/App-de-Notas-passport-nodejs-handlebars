@@ -1,15 +1,15 @@
-const usersCtrl = {};
-const passport = require("passport");
 
-const User = require("../models/user");
+import passport from "passport";
+
+import User from"../models/user.js";
 
 //formulario de registro
-usersCtrl.renderSignUpForm = (req, res) => {
+export const renderSignUpForm = (req, res) => {
   res.render("users/signup");
 };
 
 //datos de registros
-usersCtrl.signup = async (req, res) => {
+export const signup = async (req, res) => {
   const { name, email, password, confirm_password } = req.body;
   const errors = [];
 
@@ -60,19 +60,19 @@ usersCtrl.signup = async (req, res) => {
 };
 
 //formulario de inicio
-usersCtrl.renderSigninForm = (req, res) => {
+export const renderSigninForm = (req, res) => {
   res.render("users/signin");
 };
 
 //datos de inicio
-usersCtrl.signin = passport.authenticate("local", {
+export const signin = passport.authenticate("local", {
   failureRedirect: "/users/signin",
   successRedirect: "/notes",
   failureFlash: true,
 });
 
 //salir de la app
-usersCtrl.logout = (req, res) => {
+export const logout = (req, res) => {
   try {
     req.logout((err) => {
       if (err) {
@@ -86,4 +86,3 @@ usersCtrl.logout = (req, res) => {
   }
 };
 
-module.exports = usersCtrl;
